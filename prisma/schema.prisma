@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id         Int        @id @default(autoincrement())
+  name       String     @unique
+  properties Property[]
+}
+
+model City {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  locations Location[]
+}
+
+model Location {
+  id         Int        @id @default(autoincrement())
+  name       String     @unique
+  cityId     Int
+  city       City?      @relation(fields: [cityId], references: [id])
+  lat        String?
+  long       String?
+  properties Property[]
+}
+
+model Property {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique
+  description  String?
+  furnish      Furnishings @default(FURNISHED)
+  categoryId   Int
+  category     Category?   @relation(fields: [categoryId], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  aminities    Aminities[]
+  buildingInfo String?
+  locationId   Int
+  location     Location    @relation(fields: [locationId], references: [id])
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+}
+
+enum Furnishings {
+  FURNISHED
+  SEMI_FURNISHED
+  NOT_FURNISHED
+}
+
+enum Aminities {
+  BALCONY
+  POOL
+  GYM
+}

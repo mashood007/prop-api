@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Location" ALTER COLUMN "lat" DROP NOT NULL,
+ALTER COLUMN "long" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Property" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "buildingInfo" DROP NOT NULL;
