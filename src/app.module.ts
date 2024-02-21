@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { BrokersModule } from './brokers/brokers.module';
-import { UsersModule } from './users/users.module';
+import { BrokersModule } from './api/brokers/brokers.module';
+import { UsersModule } from './api/users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { NotFoundInterceptor } from './interceptors/notfound.interceptor';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [BrokersModule, UsersModule, PrismaModule],
+  imports: [
+    BrokersModule, UsersModule, PrismaModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+  ],
 })
 export class AppModule { }
